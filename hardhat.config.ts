@@ -1,5 +1,8 @@
 import { HardhatUserConfig, vars } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
+import dotenv from "dotenv";
+
+dotenv.config(); // Load .env variables
 
 const accounts = vars.has("PRIVATE_KEY") ? [vars.get("PRIVATE_KEY")] : [];
 
@@ -8,43 +11,48 @@ const config: HardhatUserConfig = {
   defaultNetwork: "localhost",
   networks: {
     localhost: {
-      url: "http://127.0.0.1:8545"
+      url: "http://127.0.0.1:8545",
+    },
+    sepolia: {
+      url: `https://sepolia.infura.io/v3/${process.env.INFURA_PROJECT_ID}`, // Using Infura for Sepolia
+      chainId: 11155111,
+      accounts,
     },
     bscTestnet: {
       url: "https://bsc-testnet-dataseed.bnbchain.org",
       chainId: 97,
-      accounts
+      accounts,
     },
     bscMainnet: {
       url: "https://bsc-dataseed.bnbchain.org",
       chainId: 56,
-      accounts
+      accounts,
     },
     greenFieldTestnet: {
       url: "https://gnfd-testnet-fullnode-tendermint-us.bnbchain.org",
       chainId: 5600,
-      accounts
+      accounts,
     },
     greenFieldMainnet: {
       url: "https://greenfield-chain-ap.bnbchain.org",
       chainId: 1017,
-      accounts
+      accounts,
     },
     opBNBTestnet: {
       url: "https://opbnb-testnet-rpc.bnbchain.org",
       chainId: 5611,
-      accounts
+      accounts,
     },
     opBNBMainnet: {
       url: "https://opbnb-mainnet-rpc.bnbchain.org",
       chainId: 204,
-      accounts
+      accounts,
     },
     mumbai: {
       url: "https://rpc-mumbai.maticvigil.com",
-      accounts
-    }
-  }
+      accounts,
+    },
+  },
 };
 
 export default config;

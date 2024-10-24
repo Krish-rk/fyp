@@ -16,17 +16,18 @@ export default function SiteLayout({ children }) {
           color: "#fff",
           display: "flex",
           justifyContent: "space-between",
-          alignItems: "center"
+          alignItems: "center",
         }}
       >
         <h3
           style={{
             margin: 0,
             padding: "0 6px",
-            fontWeight: "bold"
+            fontWeight: "bold",
           }}
         >
-          DePIN Raspi Connect
+          {" "}
+          Smart & Secure Home
         </h3>
         <ConnectWallet
           theme={"light"} // light | dark
@@ -44,7 +45,7 @@ export default function SiteLayout({ children }) {
           padding: 12,
           minHeight: "100%",
           color: "black",
-          maxHeight: "100%"
+          maxHeight: "100%",
         }}
       >
         {children}
@@ -56,7 +57,7 @@ export default function SiteLayout({ children }) {
           target="_blank"
           rel="noopener noreferrer"
         >
-          ©{new Date().getFullYear()} Salman Dabbakuti. Powered by BNB Chain
+          ©{new Date().getFullYear()} Rohith Krishnan & Team
         </a>
         <p style={{ fontSize: "12px" }}>v0.0.3</p>
       </Footer>
