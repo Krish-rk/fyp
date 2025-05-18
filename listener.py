@@ -2,20 +2,27 @@ import os
 import json
 from dotenv import load_dotenv
 from web3 import Web3, HTTPProvider
-# from RPi.GPIO import GPIO  # For real rasp-pi
+#from RPi.GPIO import GPIO  # For real rasp-pi
 from RPiSim.GPIO import GPIO  # For simulation
 
 # Load environment variables
 load_dotenv()
 
-# Define the GPIO pins
-pinList = [14, 15, 18, 23, 24, 25, 8, 7, 12, 16, 20, 21, 2, 3, 4, 17, 27, 22, 10, 9, 11, 5, 6, 13, 19, 26]
+# Define the GPIO pins and their room mappings
+gpio_mapping = {
+    14: "Room 1 Fan",
+    15: "Room 1 Light",
+    18: "Room 2 Fan",
+    23: "Room 2 Light",
+    24: "Room 3 Fan",
+    25: "Room 3 Light"
+}
 
 def setup_gpio_pins():
     # Set up GPIO pins
     GPIO.setmode(GPIO.BCM)
     GPIO.setwarnings(False)
-    for pin in pinList:
+    for pin in gpio_mapping.keys():
         GPIO.setup(pin, GPIO.OUT)
 
 def main():
@@ -54,13 +61,12 @@ def main():
             try:
                 print("PinStatusChanged event:", event['args'])
                 pin_number = event['args']['pin']
-                if pin_number in pinList:
+                if pin_number in gpio_mapping:
                     pin_status = event['args']['status']
-                    # Simulate GPIO output change
                     GPIO.output(pin_number, GPIO.HIGH if pin_status else GPIO.LOW)
-                    print(f'Pin {pin_number} status changed to {"On" if pin_status else "Off"}')
+                    print(f'{gpio_mapping[pin_number]} {"ON" if pin_status else "OFF"}')
                 else:
-                    print(f'Pin {pin_number} is not in the GPIO Setup. Skipping...')
+                    print(f'Pin {pin_number} is not mapped to a room. Skipping...')
             except Exception as e:
                 print("An error occurred:", e)
                 continue
